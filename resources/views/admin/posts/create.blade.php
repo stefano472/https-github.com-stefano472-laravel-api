@@ -45,7 +45,7 @@
                         {{-- categories select --}}
                         <div class="form-group">
                             <label for="title">Category:</label>
-                            <select name="category_id" class="@error('category_id') is-invalid @enderror">
+                            <select name="category_id" class="ml-3 p-1 @error('category_id') is-invalid @enderror">
                                 <option value="">Select a Category</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}"
@@ -62,6 +62,23 @@
                             @enderror
                         </div>
                         {{--/ categories select --}}
+
+                        <div class="form-group d-flex">
+                            <div>Tags:</div>
+                            <div class="ml-5">
+                                @foreach ($tags as $tag)
+                                    <input class="form-check-input" type="checkbox" value="{{ $tag->id }}" name="tags[]">
+                                    <div for="tags[]">
+                                        {{ $tag->name }}
+                                    </div>
+                                @endforeach
+                            </div>
+                            @error('tags')
+                                <div class="invalid-feedback">
+                                    {{$message}}
+                                </div>
+                            @enderror
+                        </div>
 
                         {{-- content post --}}
                         <div class="form-group">

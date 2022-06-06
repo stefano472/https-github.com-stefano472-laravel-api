@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 class Post extends Model
 {
     //
+    protected $table = 'posts';
+
     protected $guarded = [];
     // posso definire i campi che andró a fillare col form, con il guarded 
     // ed in quel caso li prende tutti oppure con il 

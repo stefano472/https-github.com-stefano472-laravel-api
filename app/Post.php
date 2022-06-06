@@ -23,6 +23,10 @@ class Post extends Model
         return $this->belongsTo('App\Category');
     }
 
+    public function tags(){
+        return $this->belongsToMany('App\Tag');
+    }
+
     // in questo caso utilizzo funz static perché volendo la potrei richiamare
     // anche se non ho giá creato la classe
     public static function convertToSlug($title) {

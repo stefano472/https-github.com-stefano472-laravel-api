@@ -64,6 +64,27 @@
                             </div>
                             {{--/ categories select --}}
 
+                            
+                        <div class="form-group d-flex">
+                            <div>Tags:</div>
+                            <div class="ml-5">
+                                @foreach ($tags as $tag)
+                                    <input type="checkbox" value="{{ $tag->id }}" name="tags[]"
+                                            {{ $post->tags->contains($tag) ? 'checked' : '' }}
+                                        class="form-check-input @error('tags') is-invalid @enderror"
+                                    >
+                                    <div class="form-check-label">
+                                        {{ $tag->name }}
+                                    </div>
+                                @endforeach
+                            </div>
+                            @error('tags')
+                                <div class="invalid-feedback">
+                                    {{$message}}
+                                </div>
+                            @enderror
+                        </div>
+
                             {{-- content post --}}
                             <div class="form-group">
                                 <label for="content">Content:</label>

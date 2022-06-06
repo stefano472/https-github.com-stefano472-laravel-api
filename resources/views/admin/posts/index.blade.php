@@ -22,6 +22,7 @@
                             <th>Title</th>
                             <th>Slug</th>
                             <th>Category</th>
+                            <th>Tags</th>
                             <th class="text-center">Actions</th>
                         </tr>
                         {{--/ Table title  --}}
@@ -41,6 +42,13 @@
                                         @endif
                                     @endforeach --}}
                                     {{ $post->category->name }}
+                                </td>
+                                <td>
+                                    @foreach ($post->tags as $tag)
+                                        <span>
+                                            {{ $tag->name }}
+                                        </span>
+                                    @endforeach
                                 </td>
                                 <td class="text-center">
                                     <a href="{{ route('admin.posts.show' , $post->id) }}" 

@@ -44,7 +44,7 @@
 
                         {{-- categories select --}}
                         <div class="form-group">
-                            <label for="title">Category:</label>
+                            <label for="category_id">Category:</label>
                             <select name="category_id" class="ml-3 p-1 @error('category_id') is-invalid @enderror">
                                 <option value="">Select a Category</option>
                                 @foreach ($categories as $category)
@@ -67,8 +67,11 @@
                             <div>Tags:</div>
                             <div class="ml-5">
                                 @foreach ($tags as $tag)
-                                    <input class="form-check-input" type="checkbox" value="{{ $tag->id }}" name="tags[]">
-                                    <div for="tags[]">
+                                    <input type="checkbox" value="{{ $tag->id }}" name="tags[]"
+                                        {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}
+                                        class="form-check-input @error('tags') is-invalid @enderror"
+                                    >
+                                    <div class="form-check-label">
                                         {{ $tag->name }}
                                     </div>
                                 @endforeach

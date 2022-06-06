@@ -56,16 +56,22 @@ class PostController extends Controller
         $request->validate([
             'title'=> 'required|max:250',
             'content'=> 'required',
-            'category_id'=> 'required|exists:categories,id'
+            'category_id'=> 'required|exists:categories,id',
+            'tags'=> 'exists:tags,id'
         ], [
             'title.max'=> ':attribute puó avere massimo :max caratteri',
-            'category_id.required'=> 'Seleziona una categoria'
+            'category_id.required'=> 'Seleziona una categoria',
+            'tags'=> 'Seleziona uno o piú tag'
         ]);
         $postData = $request->all();
         $newPost = new Post();
         $newPost->fill($postData);
 
         $newPost->slug = Post::convertToSlug($newPost->title);
+        $newPost->save();
+        // dd($newPost);
+        $newPost->tags()->sync($postData['tags']);
+        
         $newPost->save();
 
         return redirect()->route('admin.posts.index');
@@ -110,9 +116,9 @@ class PostController extends Controller
         if(!$post){
             abort(404);
         }
-
+        $tags = Tag::all();
         $categories = Category::all();
-        return view('admin.posts.edit', compact('post', 'categories'));
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
         
     }
 
@@ -129,16 +135,20 @@ class PostController extends Controller
         $request->validate([
             'title'=> 'required|max:250',
             'content'=> 'required',
-            'category_id'=> 'required|exists:categories,id'
+            'category_id'=> 'required|exists:categories,id',
+            'tags'=> 'exists:tags,id'
         ], [
             'title.max'=> ':attribute puó avere massimo :max caratteri',
-            'category_id.required'=> 'Seleziona una categoria'
+            'category_id.required'=> 'Seleziona una categoria',
+            'tags'=> 'Seleziona uno o piú tag'
         ]);
         $postData = $request->all();
 
         $post->fill($postData);
 
         $post->slug = Post::convertToSlug($post->title);
+        $post->tags()->sync($postData['tags']);
+
         $post->update();
 
         return redirect()->route('admin.posts.index');
@@ -154,6 +164,7 @@ class PostController extends Controller
     {
         //
         if($post) {
+            $post->tags()->sync([]);
             $post->delete();
         }
 

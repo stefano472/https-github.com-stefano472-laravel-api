@@ -16,6 +16,14 @@
                 <dd>{{$post->slug}}</dd>
                 <dt>Category:</dt>
                 <dd>{{$post->category->name}}</dd>
+                <dt>Tags:</dt>
+                <dd>
+                    @foreach ($post->tags as $tag)
+                        <span>
+                            {{$tag->name}}
+                        </span>
+                    @endforeach
+                </dd>
                 <dt>Content:</dt>
                 <dd>{{$post->content}}</dd>
             </dl>

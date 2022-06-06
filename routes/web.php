@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 // necessarie per registrazione e recupero password, in modo da rendere il sito meno 
 // hackerabile
 Auth::routes(['register' => false, 'reset'=>false, 'verify'=> false]);
+// Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
 

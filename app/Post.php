@@ -12,7 +12,7 @@ class Post extends Model
     protected $table = 'posts';
     
     // il guarded mi toglie i campi da richiedere nell' aggiornare il database
-    protected $guarded = ['created_at', 'uptated_at'];
+    protected $guarded = ['created_at'];
     // posso definire i campi che andró a fillare col form, con il guarded 
     // ed in quel caso li prende tutti oppure con il 
     // fillable vado a specificare solo quelli di interesse

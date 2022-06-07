@@ -68,11 +68,14 @@ class PostController extends Controller
         $newPost->fill($postData);
 
         $newPost->slug = Post::convertToSlug($newPost->title);
-        $newPost->save();
         // dd($newPost);
-        $newPost->tags()->sync($postData['tags']);
-        
         $newPost->save();
+
+        if (array_key_exists('tags', $postData)) {
+            $newPost->tags()->sync($postData['tags']);
+        }
+        
+        // $newPost->save();
 
         return redirect()->route('admin.posts.index');
         
@@ -147,7 +150,11 @@ class PostController extends Controller
         $post->fill($postData);
 
         $post->slug = Post::convertToSlug($post->title);
-        $post->tags()->sync($postData['tags']);
+        if (array_key_exists('tags', $postData)) {
+            $post->tags()->sync($postData['tags']);
+        } else {
+            $post->tags()->sync([]);
+        }
 
         $post->update();
 

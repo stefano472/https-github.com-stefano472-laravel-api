@@ -12,12 +12,12 @@ class Post extends Model
     protected $table = 'posts';
     
     // il guarded mi toglie i campi da richiedere nell' aggiornare il database
-    protected $guarded = ['created_at'];
+    // protected $guarded = ['id'];
     // posso definire i campi che andró a fillare col form, con il guarded 
     // ed in quel caso li prende tutti oppure con il 
     // fillable vado a specificare solo quelli di interesse
     
-    // protected $fillable = ['title', 'content', 'slug', 'category_id'];
+    protected $fillable = ['title', 'content', 'slug', 'category_id'];
     
     // utilizzo funzione public non static xk dovró richiamarla solo 
     // nell'istanza (ovvero quando avró giá creato la classe category

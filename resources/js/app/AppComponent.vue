@@ -1,6 +1,9 @@
 <template>
   <div>
+    <h1>
       work in progresso
+    </h1>
+    <p>ghesbo</p>
   </div>
 </template>
 

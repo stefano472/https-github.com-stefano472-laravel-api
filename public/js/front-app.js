@@ -1914,6 +1914,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'AppComponent'
 });
@@ -37506,9 +37509,20 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    work in progresso\n")])
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("h1", [_vm._v("\n    work in progresso\n  ")]),
+      _vm._v(" "),
+      _c("p", [_vm._v("ghesbo")]),
+    ])
+  },
+]
 render._withStripped = true
 
 

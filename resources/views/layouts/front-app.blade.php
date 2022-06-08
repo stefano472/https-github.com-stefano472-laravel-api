@@ -22,7 +22,7 @@
 <body>
     <div id="app">
        
-            @yield('content')
+            {{-- @yield('content') --}}
 
     </div>
 </body>

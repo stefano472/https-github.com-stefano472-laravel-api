@@ -12,7 +12,7 @@ window.axios.get('http://127.0.0.1:8000/api/posts')
     .then(results => console.log(results))
     .catch(e => console.log(e));
 
-// window.Vue = require('vue');
+window.Vue = require('vue');
 
 /**
  * The following block of code may be used to automatically register your
@@ -33,6 +33,10 @@ window.axios.get('http://127.0.0.1:8000/api/posts')
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-// const app = new Vue({
-//     el: '#app',
-// });
+// AppComponent = require('./app/AppComponent.vue').default;
+import AppComponent from './app/AppComponent';
+
+const app = new Vue({
+    el: '#app',
+    render: (h) =>  h(AppComponent)
+});

@@ -21,7 +21,7 @@
                             </div>
                         @endif
                     </div>
-                    <form action="{{route('admin.posts.store')}}" method="POST">
+                    <form action="{{route('admin.posts.store')}}" method="POST" enctype="multipart/form-data">
                         {{-- Token  --}}
                         @csrf
                         {{-- / Token  --}}
@@ -62,6 +62,16 @@
                             @enderror
                         </div>
                         {{--/ categories select --}}
+
+                        <div class="form-group">
+                            <label for="image">Cover Image</label>
+                            <input type="file" name="image" class="form-control @error('image') is-invalid @enderror">
+                            @error('image')
+                                <div class="invalid-feedback">
+                                    {{$message}}
+                                </div>
+                            @enderror
+                        </div>
 
                         <div class="form-group d-flex">
                             <div>Tags:</div>

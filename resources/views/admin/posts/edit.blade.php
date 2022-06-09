@@ -21,7 +21,7 @@
                                 </div>
                             @endif
                         </div>
-                        <form action="{{route('admin.posts.update', $post)}}" method="POST">
+                        <form action="{{route('admin.posts.update', $post)}}" method="POST" enctype="multipart/form-data">
                             {{-- Token  --}}
                             @csrf
                             {{-- / Token  --}}
@@ -64,26 +64,41 @@
                             </div>
                             {{--/ categories select --}}
 
-                            
-                        <div class="form-group d-flex">
-                            <div>Tags:</div>
-                            <div class="ml-5">
-                                @foreach ($tags as $tag)
-                                    <input type="checkbox" value="{{ $tag->id }}" name="tags[]"
-                                            {{ $post->tags->contains($tag) ? 'checked' : '' }}
-                                        class="form-check-input @error('tags') is-invalid @enderror"
-                                    >
-                                    <div class="form-check-label">
-                                        {{ $tag->name }}
+                            <div class="form-group">
+                                @if ($post->cover)
+                                    <div>
+                                        <img src="{{ asset('storage/' . $post->cover) }}" alt="cover-img">
                                     </div>
-                                @endforeach
+                                @endif
+                                <label for="image">Cover Image</label>
+                                <input type="file" name="image" class="form-control @error('image') is-invalid @enderror">
+                                @error('image')
+                                    <div class="invalid-feedback">
+                                        {{$message}}
+                                    </div>
+                                @enderror
                             </div>
-                            @error('tags')
-                                <div class="invalid-feedback">
-                                    {{$message}}
+
+                            
+                            <div class="form-group d-flex">
+                                <div>Tags:</div>
+                                <div class="ml-5">
+                                    @foreach ($tags as $tag)
+                                        <input type="checkbox" value="{{ $tag->id }}" name="tags[]"
+                                                {{ $post->tags->contains($tag) ? 'checked' : '' }}
+                                            class="form-check-input @error('tags') is-invalid @enderror"
+                                        >
+                                        <div class="form-check-label">
+                                            {{ $tag->name }}
+                                        </div>
+                                    @endforeach
                                 </div>
-                            @enderror
-                        </div>
+                                @error('tags')
+                                    <div class="invalid-feedback">
+                                        {{$message}}
+                                    </div>
+                                @enderror
+                            </div>
 
                             {{-- content post --}}
                             <div class="form-group">

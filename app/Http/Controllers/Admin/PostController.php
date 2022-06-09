@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 use App\post;
 use App\Category;
@@ -57,18 +58,26 @@ class PostController extends Controller
             'title'=> 'required|max:250',
             'content'=> 'required',
             'category_id'=> 'required|exists:categories,id',
-            'tags'=> 'exists:tags,id'
+            'tags'=> 'exists:tags,id',
+            'image'=> 'nullable|mimes:png,jpg'
         ], [
             'title.max'=> ':attribute puó avere massimo :max caratteri',
             'category_id.required'=> 'Seleziona una categoria',
-            'tags'=> 'Seleziona uno o piú tag'
+            'tags'=> 'Seleziona uno o piú tag',
+            'image'=> 'Il file deve essere un\'immagine'
         ]);
         $postData = $request->all();
+
+        if(array_key_exists('image', $postData)) {
+            $img_path = Storage::put('uploads', $postData['image']);
+            $postData['cover'] = $img_path;
+        }
+
         $newPost = new Post();
         $newPost->fill($postData);
 
         $newPost->slug = Post::convertToSlug($newPost->title);
-        // dd($newPost);
+
         $newPost->save();
 
         if (array_key_exists('tags', $postData)) {
@@ -139,23 +148,35 @@ class PostController extends Controller
             'title'=> 'required|max:250',
             'content'=> 'required',
             'category_id'=> 'required|exists:categories,id',
-            'tags'=> 'exists:tags,id'
+            'tags'=> 'exists:tags,id',
+            'image'=> 'nullable|mimes:png,jpg'
         ], [
             'title.max'=> ':attribute puó avere massimo :max caratteri',
             'category_id.required'=> 'Seleziona una categoria',
-            'tags'=> 'Seleziona uno o piú tag'
+            'tags'=> 'Seleziona uno o piú tag',
+            'image'=> 'Il file deve essere un\'immagine'
         ]);
         $postData = $request->all();
+
+        if(array_key_exists('image', $postData)) {
+            if($post->cover){
+                Storage::delete($post->cover);
+            }
+            $img_path = Storage::put('uploads', $postData['image']);
+            $postData['cover'] = $img_path;
+        }
 
         $post->fill($postData);
 
         $post->slug = Post::convertToSlug($post->title);
+
+        
         if (array_key_exists('tags', $postData)) {
             $post->tags()->sync($postData['tags']);
         } else {
             $post->tags()->sync([]);
         }
-
+        
         $post->update();
 
         return redirect()->route('admin.posts.index');
@@ -172,6 +193,9 @@ class PostController extends Controller
         //
         if($post) {
             $post->tags()->sync([]);
+            if($post->cover){
+                Storage::delete($post->cover);
+            }
             $post->delete();
         }
 

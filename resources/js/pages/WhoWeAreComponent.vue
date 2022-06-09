@@ -3,7 +3,7 @@
       <div class="row text-center">
           <div class="col-12">
                 <h1>
-                    Homepage
+                    Who are We?
                 </h1> 
           </div>
       </div>
@@ -11,11 +11,8 @@
 </template>
 
 <script>
-import HeaderComponent from '../components/HeaderComponent.vue'
-
 export default {
-    name: 'Homepage',
-    components: { HeaderComponent },
+    name: 'NotFoundComponent'
 }
 </script>
 

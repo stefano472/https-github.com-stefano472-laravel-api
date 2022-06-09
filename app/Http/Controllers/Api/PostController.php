@@ -20,7 +20,7 @@ class PostController extends Controller
         $posts = Post::all();
         // $posts = Post::paginate(1);
 
-        $result = ['result' => $posts, 'success' => true];
+        $result = ['results' => $posts, 'success' => true];
         return response()->json($result);
     }
 

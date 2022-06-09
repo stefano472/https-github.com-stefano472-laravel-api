@@ -1,15 +1,18 @@
 <template>
   <div>
-    <h1>
-      work in progresso
-    </h1>
-    <p>ghesbo</p>
+    <HeaderComponent/>
+    <router-view/>
+    <!-- oppure 
+    <router-view></router-view> -->
   </div>
 </template>
 
 <script>
+import HeaderComponent from '../components/HeaderComponent.vue'
+
 export default {
-    name: 'AppComponent'
+    name: 'AppComponent',
+    components: { HeaderComponent },
 }
 </script>
 

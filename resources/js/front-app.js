@@ -9,9 +9,10 @@ require('./bootstrap');
 window.axios = require('axios');
 // window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-window.axios.get('http://127.0.0.1:8000/api/posts')
-    .then(results => console.log(results))
-    .catch(e => console.log(e));
+// faccio la chiamata axuios solo dove ne ho bisogno tramite vue mounted
+// window.axios.get('http://127.0.0.1:8000/api/posts')
+//     .then(results => console.log(results))
+//     .catch(e => console.log(e));
 
 window.Vue = require('vue');
 
@@ -37,7 +38,10 @@ window.Vue = require('vue');
 // AppComponent = require('./app/AppComponent.vue').default;
 import App from './app/App';
 
+import router from './routes'
+
 const app = new Vue({
     el: '#app',
-    render: (h) =>  h(App)
+    render: (createApp) =>  createApp(App),
+    router
 });

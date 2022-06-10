@@ -6,6 +6,7 @@ Vue.use(VueRouter);
 
 import Homepage from './pages/Homepage';
 import BlogComponent from './pages/BlogComponent';
+import SingleBlogComponent from './pages/SingleBlogComponent';
 import WhoWeAreComponent from './pages/WhoWeAreComponent';
 import ContactsComponent from './pages/ContactsComponent';
 import NotFoundComponent from './pages/NotFoundComponent';
@@ -23,6 +24,11 @@ const router = new VueRouter({
             path: '/blog',
             name: 'blog',
             component: BlogComponent
+        },
+        {
+            path: '/blog/:id',
+            name: 'single-blog',
+            component: SingleBlogComponent
         },
         {
             path: '/who-we-are',

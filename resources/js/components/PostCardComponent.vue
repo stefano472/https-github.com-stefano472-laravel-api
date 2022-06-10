@@ -1,6 +1,9 @@
 <template>
   <div>
-      {{post.title}}
+      <h3>
+        {{post.title}}
+      </h3>
+      <router-link :to="{ name: 'single-blog', params: {id : post.id} }">visualizza</router-link>
   </div>
 </template>
 
@@ -8,7 +11,7 @@
 export default {
     name: 'PostCardComponent',
     props: {
-        post: Object
+        post: Object,
     },
     computed: {
         trimmedContent(){

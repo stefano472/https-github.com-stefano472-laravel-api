@@ -1,9 +1,10 @@
 <template>
   <div>
-      <h3>
+      <h2>
         {{post.title}}
-      </h3>
-      <router-link :to="{ name: 'single-blog', params: {id : post.id} }">visualizza</router-link>
+      </h2>
+        {{post.slug}}
+      <router-link :to="{ name: 'single-blog', params: {slug : post.slug} }">visualizza</router-link>
   </div>
 </template>
 

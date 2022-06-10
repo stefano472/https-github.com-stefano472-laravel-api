@@ -19,9 +19,9 @@ export default {
         }
     },
     created(){
-        const id = this.$route.params.id;
-        console.log('created with id:', id);
-        window.axios.get('http://127.0.0.1:8000/api/posts/' + id)
+        const slug = this.$route.params.slug;
+        console.log('created with slug:', slug);
+        window.axios.get('http://127.0.0.1:8000/api/posts/' + slug)
             .then(({status, data}) => {
                 console.log(data.results);
                 if(status === 200 && data.success){

@@ -1990,6 +1990,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PostCardComponent',
   props: {
@@ -2064,6 +2065,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'NotFoundComponent',
@@ -2072,23 +2076,40 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      posts: []
+      posts: [],
+      currentPage: 1,
+      prevPageLink: '',
+      nextPageLink: ''
     };
   },
   created: function created() {
-    var _this = this;
+    this.loadPage('http://127.0.0.1:8000/api/posts');
+  },
+  methods: {
+    loadPage: function loadPage(url) {
+      var _this = this;
 
-    window.axios.get('http://127.0.0.1:8000/api/posts').then(function (_ref) {
-      var status = _ref.status,
-          data = _ref.data;
-      console.log(data.results);
+      window.axios.get(url).then(function (_ref) {
+        var status = _ref.status,
+            data = _ref.data;
+        console.log(data.results);
 
-      if (status === 200 && data.success) {
-        _this.posts = data.results;
-      }
-    })["catch"](function (e) {
-      return console.log(e);
-    });
+        if (status === 200 && data.success) {
+          _this.posts = data.results.data;
+          _this.currentPage = data.results.current_page;
+          _this.prevPageLink = data.results.prev_page_url;
+          _this.nextPageLink = data.results.next_page_url;
+        }
+      })["catch"](function (e) {
+        return console.log(e);
+      });
+    },
+    goPrevPage: function goPrevPage() {
+      this.loadPage(this.prevPageLink);
+    },
+    goNextPage: function goNextPage() {
+      this.loadPage(this.nextPageLink);
+    }
   }
 });
 
@@ -2214,9 +2235,9 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    var id = this.$route.params.id;
-    console.log('created with id:', id);
-    window.axios.get('http://127.0.0.1:8000/api/posts/' + id).then(function (_ref) {
+    var slug = this.$route.params.slug;
+    console.log('created with slug:', slug);
+    window.axios.get('http://127.0.0.1:8000/api/posts/' + slug).then(function (_ref) {
       var status = _ref.status,
           data = _ref.data;
       console.log(data.results);
@@ -37916,11 +37937,15 @@ var render = function () {
   return _c(
     "div",
     [
-      _c("h3", [_vm._v("\n      " + _vm._s(_vm.post.title) + "\n    ")]),
-      _vm._v(" "),
+      _c("h2", [_vm._v("\n      " + _vm._s(_vm.post.title) + "\n    ")]),
+      _vm._v("\n      " + _vm._s(_vm.post.slug) + "\n    "),
       _c(
         "router-link",
-        { attrs: { to: { name: "single-blog", params: { id: _vm.post.id } } } },
+        {
+          attrs: {
+            to: { name: "single-blog", params: { slug: _vm.post.slug } },
+          },
+        },
         [_vm._v("visualizza")]
       ),
     ],
@@ -37991,7 +38016,37 @@ var render = function () {
       _vm.posts.length > 0
         ? _c(
             "div",
-            [_c("PostCardListComponent", { attrs: { posts: _vm.posts } })],
+            [
+              _c("PostCardListComponent", { attrs: { posts: _vm.posts } }),
+              _vm._v(" "),
+              _vm.prevPageLink
+                ? _c(
+                    "button",
+                    {
+                      on: {
+                        click: function ($event) {
+                          return _vm.goPrevPage()
+                        },
+                      },
+                    },
+                    [_vm._v("prev")]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.nextPageLink
+                ? _c(
+                    "button",
+                    {
+                      on: {
+                        click: function ($event) {
+                          return _vm.goNextPage()
+                        },
+                      },
+                    },
+                    [_vm._v("next")]
+                  )
+                : _vm._e(),
+            ],
             1
           )
         : _c("div", [_c("p", [_vm._v("...caricamento in corso")])]),
@@ -54401,7 +54456,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     name: 'blog',
     component: _pages_BlogComponent__WEBPACK_IMPORTED_MODULE_3__["default"]
   }, {
-    path: '/blog/:id',
+    path: '/blog/:slug',
     name: 'single-blog',
     component: _pages_SingleBlogComponent__WEBPACK_IMPORTED_MODULE_4__["default"]
   }, {
